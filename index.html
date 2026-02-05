@@ -2,16 +2,55 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jesa</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* --- ÉCRAN D'INTRO --- */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOut 1.2s ease forwards;
+      animation-delay: 1.3s; /* Temps avant que l'écran disparaisse */
+    }
+
+    #intro img {
+      width: 120px;
+      animation: pop 1s ease forwards;
+    }
+
+    /* Animation du logo */
+    @keyframes pop {
+      0% { opacity: 0; transform: scale(0.7); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Disparition du fond blanc */
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+  </style>
 </head>
 
 <body>
+
+  <!-- Écran d'intro -->
+  <div id="intro">
+    <img src="images/logo.jpg" alt="Logo Jesa">
+  </div>
+
+  <!-- Contenu classique du site -->
   <header class="top">
     <div class="brand">
       <img class="logo" src="images/logo.jpg" alt="Logo Jesa" />
-      <a class="email" href="mailto:jeesspro@gmail.com">jeesspro@gmail.com</a>
+      <a class="email" href="mailto:tonmail@exemple.com">tonmail@exemple.com</a>
     </div>
   </header>
 
@@ -20,5 +59,6 @@
     <img src="images/photo2.png" alt="Projet 2" />
     <img src="images/photo3.jpg" alt="Projet 3" />
   </main>
+
 </body>
 </html>
