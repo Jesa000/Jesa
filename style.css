@@ -41,18 +41,29 @@ a { color: inherit; }
 
 /* GALLERY */
 .gallery {
-  max-width: 1800px;         /* plus large = style editorial */
-  margin: 60px auto;         /* + marge pour respirer */
-  padding: 0 40px;           /* espace sur les côtés */
+  max-width: 1800px;
+  margin: 60px auto;
+  padding: 0 40px;
   display: grid;
-  gap: 80px;                 /* GRAND espace entre les images */
-  grid-template-columns: repeat(4, 1fr); /* desktop = 4 colonnes */
+
+  grid-template-columns: repeat(4, 1fr);
+
+  column-gap: 90px;  /* espace ENTRE colonnes */
+  row-gap: 120px;    /* espace ENTRE rangées */
+}
+
+/* IMPORTANT : chaque item doit être un bloc */
+.gallery .work {
+  display: block;
 }
 
 /* MOBILE = 2 colonnes */
 @media (max-width: 850px) {
   .gallery {
-    grid-template-columns: repeat(2, 1fr); /* ✔ TÉLÉPHONE → 2 colonnes */
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 10px;       /* ← plus d’espace pour les photos */
+    column-gap: 20px;      /* ← écart raisonnable */
+    row-gap: 30px;
   }
 }
 
