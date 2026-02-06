@@ -5,10 +5,9 @@ body {
   color: #111;
 }
 
-/* HEADER (comme ton exemple : logo gauche, contact droite) */
+/* HEADER */
 .top {
-  padding: 40px 40px 20px 40px;
-  width: 100%;
+  padding: 40px 50px 30px 50px; /* + largeur pour éviter que ça coupe */
 }
 
 .brand {
@@ -17,17 +16,17 @@ body {
   align-items: flex-start;
 }
 
-/* Logo un peu plus grand (style portfolio mode) */
+/* Logo un peu plus petit pour laisser de la place au texte */
 .logo {
-  height: 70px;
+  height: 70px;  /* ajusté */
 }
 
-/* CONTACT right side */
+/* CONTACT */
 .contact {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 3px;
+  gap: 4px;
 }
 
 .email,
@@ -37,30 +36,26 @@ body {
   text-decoration: underline;
 }
 
-/* Remove default blue link */
 a, a:link, a:visited, a:hover, a:active {
   color: inherit;
 }
 
-/* GALLERY LIKE YOUR EXAMPLE */
+/* GALLERY */
 .gallery {
-  max-width: 1200px; /* un peu plus large (comme l'exemple), change si besoin */
-  margin: 60px auto;
+  max-width: 1100px; /* revenir au format parfait d’avant */
+  margin: 40px auto;
   padding: 0 20px;
-
   display: grid;
-  gap: 60px 40px; /* beaucoup d'air entre les images, façon catalogue */
-  grid-template-columns: repeat(4, 1fr); /* 4 colonnes comme ton exemple */
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .gallery img {
   width: 100%;
   display: block;
-
-  /* petit fondu d’apparition */
   opacity: 0;
   transform: translateY(4px);
-  transition: opacity .4s ease, transform .4s ease;
+  transition: opacity .35s ease, transform .35s ease;
 }
 
 .gallery img.loaded {
@@ -68,12 +63,11 @@ a, a:link, a:visited, a:hover, a:active {
   transform: translateY(0);
 }
 
-/* Lightbox clickable */
+/* Lightbox */
 .work {
   display: block;
 }
 
-/* LIGHTBOX (fond blanc) */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -84,7 +78,6 @@ a, a:link, a:visited, a:hover, a:active {
   z-index: 99999;
   padding: 24px;
 }
-
 .lightbox.open {
   display: flex;
 }
@@ -100,7 +93,7 @@ a, a:link, a:visited, a:hover, a:active {
   opacity: 1;
 }
 
-/* gray buttons */
+/* Buttons lightbox */
 .lb-btn,
 .lb-close {
   color: #555 !important;
@@ -113,37 +106,10 @@ a, a:link, a:visited, a:hover, a:active {
   -webkit-text-fill-color: #000;
 }
 
-/* position croix */
-.lb-close {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  font-size: 30px;
-}
-
 /* remove arrows on mobile */
 @media (max-width: 700px) {
   .lb-prev,
   .lb-next {
     display: none !important;
-  }
-}
-
-/* RESPONSIVE GALLERY */
-@media (max-width: 1100px) {
-  .gallery {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 780px) {
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 540px) {
-  .gallery {
-    grid-template-columns: 1fr;
   }
 }
