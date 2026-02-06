@@ -5,31 +5,29 @@ body {
   color: #111;
 }
 
-/* HEADER FULL WIDTH */
+/* HEADER (comme ton exemple : logo gauche, contact droite) */
 .top {
-  padding: 20px;
-}
-
-/* Contenu centré et 100% largeur */
-.brand {
+  padding: 40px 40px 20px 40px;
   width: 100%;
-  text-align: center; /* centre logo + email + insta */
+}
+
+.brand {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
+/* Logo un peu plus grand (style portfolio mode) */
 .logo {
-  height: 70px;  /* change ici si tu veux plus grand */
+  height: 70px;
 }
 
-/* CONTACT FULL WIDTH + SOULIGNÉ + NOIR */
+/* CONTACT right side */
 .contact {
   display: flex;
   flex-direction: column;
-  align-items: center; /* centré */
-  gap: 4px;
+  align-items: flex-end;
+  gap: 3px;
 }
 
 .email,
@@ -39,24 +37,27 @@ body {
   text-decoration: underline;
 }
 
-/* Supprime bleu automatique des liens */
+/* Remove default blue link */
 a, a:link, a:visited, a:hover, a:active {
   color: inherit;
 }
 
-/* --- GALERIE FULL WIDTH --- */
+/* GALLERY LIKE YOUR EXAMPLE */
 .gallery {
-  width: 100%;
-  margin: 40px 0;
-  padding: 0 20px; /* petites marges latérales */
+  max-width: 1200px; /* un peu plus large (comme l'exemple), change si besoin */
+  margin: 60px auto;
+  padding: 0 20px;
+
   display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* full responsive */
+  gap: 60px 40px; /* beaucoup d'air entre les images, façon catalogue */
+  grid-template-columns: repeat(4, 1fr); /* 4 colonnes comme ton exemple */
 }
 
 .gallery img {
   width: 100%;
   display: block;
+
+  /* petit fondu d’apparition */
   opacity: 0;
   transform: translateY(4px);
   transition: opacity .4s ease, transform .4s ease;
@@ -67,62 +68,82 @@ a, a:link, a:visited, a:hover, a:active {
   transform: translateY(0);
 }
 
-/* Les images sont cliquables */
+/* Lightbox clickable */
 .work {
   display: block;
 }
 
-/* LIGHTBOX (plein écran) */
+/* LIGHTBOX (fond blanc) */
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255,255,255,0.97);
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 9998;
+  z-index: 99999;
   padding: 24px;
 }
-.lightbox.open { display: flex; }
+
+.lightbox.open {
+  display: flex;
+}
 
 .lightbox img {
-  max-width: min(1100px, 92vw);
-  max-height: 88vh;
+  max-width: min(900px, 90vw);
+  max-height: 85vh;
   opacity: 0;
   transition: opacity .25s ease;
 }
+
 .lightbox.open img {
   opacity: 1;
 }
 
-/* Flèches + croix */
+/* gray buttons */
 .lb-btn,
 .lb-close {
-  color: #444 !important;
-  -webkit-text-fill-color: #444;
+  color: #555 !important;
+  -webkit-text-fill-color: #555;
 }
 
-/* Hover desktop */
 .lb-btn:hover,
 .lb-close:hover {
-  color: #111 !important;
-  -webkit-text-fill-color: #111;
+  color: #000 !important;
+  -webkit-text-fill-color: #000;
 }
 
-/* Position boutons */
-.lb-prev { left: 10px; }
-.lb-next { right: 10px; }
+/* position croix */
 .lb-close {
   position: fixed;
-  top: 14px;
-  right: 14px;
-  font-size: 28px;
+  top: 16px;
+  right: 16px;
+  font-size: 30px;
 }
 
-/* Sur téléphone : cacher flèches */
+/* remove arrows on mobile */
 @media (max-width: 700px) {
   .lb-prev,
   .lb-next {
     display: none !important;
+  }
+}
+
+/* RESPONSIVE GALLERY */
+@media (max-width: 1100px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 780px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .gallery {
+    grid-template-columns: 1fr;
   }
 }
