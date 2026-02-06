@@ -42,14 +42,14 @@ a { color: inherit; }
   margin: 60px auto;         /* + marge pour respirer */
   padding: 0 40px;           /* espace sur les côtés */
   display: grid;
-  gap: 60px;                 /* GRAND espace entre les images */
+  gap: 70px;                 /* GRAND espace entre les images */
   grid-template-columns: repeat(4, 1fr); /* desktop = 4 colonnes */
 }
 
-/* MOBILE = 3 colonnes */
-@media (max-width: 700px) {
+/* MOBILE = 2 colonnes */
+@media (max-width: 850px) {
   .gallery {
-    grid-template-columns: repeat(2, 1fr); /* ✔ TÉLÉPHONE → 3 colonnes */
+    grid-template-columns: repeat(2, 1fr); /* ✔ TÉLÉPHONE → 2 colonnes */
   }
 }
 
