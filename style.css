@@ -7,7 +7,7 @@ body {
 
 /* HEADER */
 .top {
-  padding: 40px 50px 30px 50px; /* + largeur pour éviter que ça coupe */
+  padding: 40px 20px 30px 20px; /* ✔ aligné EXACTEMENT avec la galerie */
 }
 
 .brand {
@@ -16,9 +16,9 @@ body {
   align-items: flex-start;
 }
 
-/* Logo un peu plus petit pour laisser de la place au texte */
+/* Logo */
 .logo {
-  height: 20px;  /* ajusté */
+  height: 20px; /* tu peux augmenter un peu si tu veux */
 }
 
 /* CONTACT */
@@ -42,9 +42,9 @@ a, a:link, a:visited, a:hover, a:active {
 
 /* GALLERY */
 .gallery {
-  max-width: 1100px; /* revenir au format parfait d’avant */
+  max-width: 1100px;
   margin: 40px auto;
-  padding: 0 20px;
+  padding: 0 20px; /* ✔ même padding que le header → alignement parfait */
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(3, 1fr);
@@ -78,6 +78,7 @@ a, a:link, a:visited, a:hover, a:active {
   z-index: 99999;
   padding: 24px;
 }
+
 .lightbox.open {
   display: flex;
 }
