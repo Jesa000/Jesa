@@ -4,7 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jesa</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- Anti-cache CSS (augmente le chiffre si besoin) -->
+  <link rel="stylesheet" href="style.css?v=4" />
 
   <style>
     /* --- INTRO FADE (sans zoom) --- */
@@ -24,7 +26,7 @@
       width: 120px;
       height: auto;
       opacity: 0;
-      animation: fadeIn 0.9s ease forwards; /* fade-in seulement */
+      animation: fadeIn 0.9s ease forwards; /* fade-in uniquement */
     }
 
     @keyframes fadeIn {
@@ -37,7 +39,7 @@
       pointer-events: none;
     }
 
-    /* --- LIGHTBOX (plein écran) --- */
+    /* --- LIGHTBOX --- */
     .lightbox {
       position: fixed;
       inset: 0;
@@ -48,7 +50,6 @@
       z-index: 9998;
       padding: 24px;
     }
-
     .lightbox.open { display: flex; }
 
     .lightbox img {
@@ -57,7 +58,10 @@
       width: auto;
       height: auto;
       display: block;
+      opacity: 0;                 /* fade image */
+      transition: opacity .25s ease;
     }
+    .lightbox.open img { opacity: 1; }
 
     .lb-btn {
       position: fixed;
@@ -70,9 +74,7 @@
       padding: 12px 14px;
       opacity: 0.6;
     }
-
     .lb-btn:hover { opacity: 1; }
-
     .lb-prev { left: 10px; }
     .lb-next { right: 10px; }
 
@@ -87,12 +89,11 @@
       padding: 10px 12px;
       opacity: 0.6;
     }
-
     .lb-close:hover { opacity: 1; }
 
-    @media (max-width: 600px) {
-      .lb-btn { font-size: 34px; }
-      .lb-close { font-size: 30px; }
+    /* Flèches cachées sur téléphone (croix gardée) */
+    @media (max-width: 700px) {
+      .lb-prev, .lb-next { display: none !important; }
     }
   </style>
 </head>
@@ -108,7 +109,6 @@
     <div class="brand">
       <img class="logo" src="images/logo.jpg" alt="Logo Jesa" />
 
-      <!-- Contact (email + insta cliquables) -->
       <div class="contact">
         <a class="email" href="mailto:jeesspro@gmail.com">jeesspro@gmail.com</a>
         <a class="insta" href="https://instagram.com/jesa000" target="_blank" rel="noreferrer">@jesa000</a>
@@ -116,17 +116,14 @@
     </div>
   </header>
 
-  <!-- GALERIE (images cliquables) -->
+  <!-- GALERIE -->
   <main class="gallery" id="gallery">
-    <!-- Tes fichiers actuels -->
     <a href="images/photo1.png" class="work">
       <img src="images/photo1.png" alt="Projet 1" loading="lazy" />
     </a>
-
     <a href="images/photo2.png" class="work">
       <img src="images/photo2.png" alt="Projet 2" loading="lazy" />
     </a>
-
     <a href="images/photo3.jpg" class="work">
       <img src="images/photo3.jpg" alt="Projet 3" loading="lazy" />
     </a>
@@ -148,6 +145,13 @@
         intro.classList.add("hide");
         setTimeout(() => intro.remove(), 400);
       }, 2700);
+    });
+
+    // Fade-in doux des images de galerie quand elles chargent
+    document.querySelectorAll(".gallery img").forEach(img => {
+      const markLoaded = () => img.classList.add("loaded");
+      img.addEventListener("load", markLoaded);
+      if (img.complete) markLoaded();
     });
 
     // Lightbox
@@ -201,7 +205,7 @@
       if (e.target === lb) closeLB();
     });
 
-    // Clavier
+    // Clavier (desktop)
     window.addEventListener("keydown", (e) => {
       if (!lb.classList.contains("open")) return;
       if (e.key === "Escape") closeLB();
