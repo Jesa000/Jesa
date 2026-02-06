@@ -38,18 +38,18 @@ a { color: inherit; }
 
 /* GALLERY */
 .gallery {
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 0 20px;
+  max-width: 1800px;         /* plus large = style editorial */
+  margin: 60px auto;         /* + marge pour respirer */
+  padding: 0 40px;           /* espace sur les côtés */
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(4, 1fr);   /* ✔ ORDINATEUR → 4 colonnes */
+  gap: 60px;                 /* GRAND espace entre les images */
+  grid-template-columns: repeat(4, 1fr); /* desktop = 4 colonnes */
 }
 
 /* MOBILE = 3 colonnes */
 @media (max-width: 700px) {
   .gallery {
-    grid-template-columns: repeat(3, 1fr); /* ✔ TÉLÉPHONE → 3 colonnes */
+    grid-template-columns: repeat(2, 1fr); /* ✔ TÉLÉPHONE → 3 colonnes */
   }
 }
 
