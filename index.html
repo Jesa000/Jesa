@@ -2,12 +2,12 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jesa</title>
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* Écran d'intro */
+    /* --- INTRO FADE (sans zoom) --- */
     #intro {
       position: fixed;
       inset: 0;
@@ -20,12 +20,11 @@
       transition: opacity 0.4s ease; /* fade-out rapide */
     }
 
-    /* Logo : fade-in seulement */
     #intro img {
       width: 120px;
       height: auto;
       opacity: 0;
-      animation: fadeIn 0.9s ease forwards; /* fade-in propre */
+      animation: fadeIn 0.9s ease forwards; /* fade-in seulement */
     }
 
     @keyframes fadeIn {
@@ -33,45 +32,198 @@
       to { opacity: 1; }
     }
 
-    /* Disparition de l'intro */
     #intro.hide {
       opacity: 0;
       pointer-events: none;
+    }
+
+    /* --- LIGHTBOX (plein écran) --- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.96);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9998;
+      padding: 24px;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: min(1100px, 92vw);
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      display: block;
+    }
+
+    .lb-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 12px 14px;
+      opacity: 0.6;
+    }
+
+    .lb-btn:hover { opacity: 1; }
+
+    .lb-prev { left: 10px; }
+    .lb-next { right: 10px; }
+
+    .lb-close {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: 0;
+      font-size: 26px;
+      cursor: pointer;
+      padding: 10px 12px;
+      opacity: 0.6;
+    }
+
+    .lb-close:hover { opacity: 1; }
+
+    @media (max-width: 600px) {
+      .lb-btn { font-size: 34px; }
+      .lb-close { font-size: 30px; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Intro -->
-  <div id="intro">
+  <!-- INTRO -->
+  <div id="intro" aria-hidden="true">
     <img src="images/logo.jpg" alt="Logo Jesa" />
   </div>
 
-  <!-- Site -->
+  <!-- HEADER -->
   <header class="top">
     <div class="brand">
       <img class="logo" src="images/logo.jpg" alt="Logo Jesa" />
-      <a class="email" href="mailto:jeesspro@gmail.com">jeesspro@gmail.com</a>
+
+      <!-- Contact (email + insta cliquables) -->
+      <div class="contact">
+        <a class="email" href="mailto:jeesspro@gmail.com">jeesspro@gmail.com</a>
+        <a class="insta" href="https://instagram.com/jesa000" target="_blank" rel="noreferrer">@jesa000</a>
+      </div>
     </div>
   </header>
 
-  <main class="gallery">
-    <img src="images/photo1.png" alt="Projet 1" loading="lazy" />
-    <img src="images/photo2.png" alt="Projet 2" loading="lazy" />
-    <img src="images/photo3.jpg" alt="Projet 3" loading="lazy" />
+  <!-- GALERIE (images cliquables) -->
+  <main class="gallery" id="gallery">
+    <!-- Tes fichiers actuels -->
+    <a href="images/photo1.png" class="work">
+      <img src="images/photo1.png" alt="Projet 1" loading="lazy" />
+    </a>
+
+    <a href="images/photo2.png" class="work">
+      <img src="images/photo2.png" alt="Projet 2" loading="lazy" />
+    </a>
+
+    <a href="images/photo3.jpg" class="work">
+      <img src="images/photo3.jpg" alt="Projet 3" loading="lazy" />
+    </a>
   </main>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-close" id="lbClose" aria-label="Fermer">×</button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Image précédente">‹</button>
+    <img id="lbImg" alt="">
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Image suivante">›</button>
+  </div>
+
   <script>
-    // Intro visible plus longtemps
+    // Intro : 0.9s fade-in + 1.8s pause = 2.7s, puis fade-out 0.4s
     window.addEventListener("load", () => {
       const intro = document.getElementById("intro");
-
-      // 👇 Le logo reste affiché : 0.9s (fade-in) + 1.8s (pause) = 2.7s total avant fade-out
       setTimeout(() => {
         intro.classList.add("hide");
         setTimeout(() => intro.remove(), 400);
       }, 2700);
     });
+
+    // Lightbox
+    const links = Array.from(document.querySelectorAll("a.work"));
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbPrev = document.getElementById("lbPrev");
+    const lbNext = document.getElementById("lbNext");
+    const lbClose = document.getElementById("lbClose");
+
+    let index = 0;
+
+    function openLB(i) {
+      index = i;
+      lbImg.src = links[index].getAttribute("href");
+      lb.classList.add("open");
+      lb.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLB() {
+      lb.classList.remove("open");
+      lb.setAttribute("aria-hidden", "true");
+      lbImg.src = "";
+      document.body.style.overflow = "";
+    }
+
+    function prev() {
+      index = (index - 1 + links.length) % links.length;
+      lbImg.src = links[index].getAttribute("href");
+    }
+
+    function next() {
+      index = (index + 1) % links.length;
+      lbImg.src = links[index].getAttribute("href");
+    }
+
+    links.forEach((a, i) => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        openLB(i);
+      });
+    });
+
+    lbPrev.addEventListener("click", prev);
+    lbNext.addEventListener("click", next);
+    lbClose.addEventListener("click", closeLB);
+
+    // Click hors image = fermer
+    lb.addEventListener("click", (e) => {
+      if (e.target === lb) closeLB();
+    });
+
+    // Clavier
+    window.addEventListener("keydown", (e) => {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") closeLB();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    });
+
+    // Swipe mobile
+    let touchStartX = null;
+    lb.addEventListener("touchstart", (e) => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    lb.addEventListener("touchend", (e) => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      touchStartX = null;
+
+      if (Math.abs(dx) < 40) return;
+      if (dx > 0) prev();
+      else next();
+    }, { passive: true });
   </script>
 </body>
 </html>
