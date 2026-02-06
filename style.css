@@ -23,35 +23,33 @@ body {
   height: 40px;
 }
 
+/* CONTACT : email + insta empilés en noir + soulignés */
+.contact {
+  display: flex;
+  flex-direction: column;   /* l’un AU-DESSUS de l’autre */
+  align-items: flex-end;
+  gap: 4px;
+}
+
 /* Email */
 .email {
   font-size: 12px;
-  color: #333;
-  text-decoration: none;
-  opacity: 0.8;
-}
-.email:hover {
+  color: #000;              /* noir */
+  text-decoration: underline; /* toujours souligné */
   opacity: 1;
-  text-decoration: underline;
 }
 
-/* Contact (email + insta empilés) */
-.contact {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-}
-
+/* Instagram */
 .insta {
   font-size: 12px;
-  color: #111;
-  text-decoration: none;
-  opacity: 0.7;
-}
-.insta:hover {
+  color: #000;               /* noir */
+  text-decoration: underline; /* toujours souligné */
   opacity: 1;
-  text-decoration: underline;
+}
+
+/* Supprime la couleur bleue par défaut des liens */
+a {
+  color: inherit;
 }
 
 /* Gallery */
@@ -69,7 +67,7 @@ body {
   display: block;
 }
 
-/* Permet aux images cliquables de ne pas prendre un style de lien */
+/* Images cliquables (lightbox) */
 .work {
   display: block;
 }
