@@ -61,9 +61,13 @@ a { color: inherit; }
 @media (max-width: 850px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
-    padding: 0 10px;       /* ← plus d’espace pour les photos */
-    column-gap: 20px;      /* ← écart raisonnable */
+    padding: 0 10px;       /* images alignées à gauche */
+    column-gap: 20px;
     row-gap: 30px;
+  }
+
+  .brand {
+    padding: 0 10px;       /* logo aligné EXACTEMENT comme les images */
   }
 }
 
@@ -120,6 +124,21 @@ a { color: inherit; }
   .lb-next {
     display: none !important;
   }
+}
+
+/* Texte sous chaque image */
+.caption {
+  text-align: center;
+  font-size: 12px;          /* Ajuste si tu veux plus grand */
+  color: #000;              /* garde ton style minimaliste */
+  margin-top: 6px;          /* espace entre l’image et le texte */
+  opacity: 0.7;             /* léger effet mode */
+}
+
+.work {
+  display: flex;            /* pour garder l'image + texte groupés */
+  flex-direction: column;
+  align-items: center;      /* centre parfaitement le texte sous l'image */
 }
 
 /* build refresh */
