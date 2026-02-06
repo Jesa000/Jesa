@@ -7,7 +7,7 @@ body {
 
 /* HEADER */
 .top {
-  padding: 40px 20px 30px 20px;
+  padding: 40px 40px 30px 40px;
 }
 
 .brand {
@@ -42,7 +42,7 @@ a { color: inherit; }
   margin: 60px auto;         /* + marge pour respirer */
   padding: 0 40px;           /* espace sur les côtés */
   display: grid;
-  gap: 70px;                 /* GRAND espace entre les images */
+  gap: 80px;                 /* GRAND espace entre les images */
   grid-template-columns: repeat(4, 1fr); /* desktop = 4 colonnes */
 }
 
