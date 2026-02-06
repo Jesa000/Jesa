@@ -84,3 +84,16 @@ a {
     grid-template-columns: 1fr;
   }
 }
+/* Boutons lightbox - couleur grise forcée */
+.lb-btn,
+.lb-close {
+  color: #444 !important;         /* gris foncé */
+  -webkit-text-fill-color: #444;  /* iPhone / Safari */
+}
+
+/* Au survol (sur desktop) */
+.lb-btn:hover,
+.lb-close:hover {
+  color: #111 !important;
+  -webkit-text-fill-color: #111;
+}
