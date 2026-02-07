@@ -16,23 +16,24 @@ body {
   padding: 0 40px;
   display: flex;
   justify-content: space-between;
-  align-items: center; /* ✅ alignement vertical propre (logo / image / contact) */
+  align-items: flex-start; /* Logo + sous-logo empilés à gauche, contact à droite */
 }
 
+/* LOGO PRINCIPAL */
 .logo {
   height: 20px;
   display: block;
 }
 
-/* ✅ IMAGE CENTRÉE */
-.center-img {
+/* IMAGE SOUS LE LOGO */
+.left-block {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px; /* espace entre logo et image */
 }
 
-.center-img img {
-  height: 20px;        /* même hauteur que le logo */
+.sublogo {
+  height: 20px;
   display: block;
   object-fit: contain;
   opacity: 0.9;
@@ -63,11 +64,11 @@ a {
   padding: 0 40px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 90px;
-  row-gap: 120px;
+  column-gap: 90px;   /* espace horizontal */
+  row-gap: 120px;     /* espace vertical */
 }
 
-/* Chaque item + caption */
+/* Bloc image + caption */
 .work {
   display: flex;
   flex-direction: column;
@@ -88,7 +89,7 @@ a {
   transform: translateY(0);
 }
 
-/* Texte sous chaque image */
+/* Caption */
 .caption {
   margin-top: 10px;
   font-size: 12px;
@@ -109,12 +110,12 @@ a {
     padding: 0 10px;
   }
 
-  .center-img img {
-    height: 18px; /* ✅ un poil plus petit sur tel */
+  .sublogo {
+    height: 18px; /* un peu plus petit sur téléphone */
   }
 }
 
-/* Lightbox couleurs (optionnel, cohérent avec tes styles) */
+/* Lightbox */
 .lb-btn,
 .lb-close {
   color: #555 !important;
