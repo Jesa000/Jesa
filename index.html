@@ -6,93 +6,15 @@
   <title>Jesa</title>
 
   <!-- anti-cache -->
-  <link rel="stylesheet" href="style.css?v=7" />
-  <style>
-    /* INTRO */
-    #intro {
-      position: fixed;
-      inset: 0;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      opacity: 1;
-      transition: opacity 0.4s ease;
-    }
-    #intro img {
-      width: 120px;
-      opacity: 0;
-      animation: fadeIn 0.9s ease forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    #intro.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* LIGHTBOX */
-    .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,0.96);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9998;
-      padding: 24px;
-    }
-    .lightbox.open { display: flex; }
-
-    .lightbox img {
-      max-width: min(1100px, 92vw);
-      max-height: 88vh;
-      opacity: 0;
-      transition: opacity .25s ease;
-    }
-    .lightbox.open img { opacity: 1; }
-
-    .lb-btn {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      font-size: 28px;
-      cursor: pointer;
-      padding: 12px 14px;
-      opacity: 0.6;
-    }
-    .lb-btn:hover { opacity: 1; }
-    .lb-prev { left: 10px; }
-    .lb-next { right: 10px; }
-
-    .lb-close {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      background: transparent;
-      border: none;
-      font-size: 26px;
-      cursor: pointer;
-      padding: 10px 12px;
-      opacity: 0.6;
-    }
-    .lb-close:hover { opacity: 1; }
-
-    @media (max-width: 700px) {
-      .lb-prev, .lb-next { display: none !important; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css?v=1" />
 </head>
 
 <body>
 
   <!-- INTRO -->
-  <div id="intro"><img src="images/logo.png" alt="Logo Jesa" /></div>
+  <div id="intro">
+    <img src="images/logo.png" alt="Logo Jesa" />
+  </div>
 
   <!-- HEADER -->
   <header class="top">
@@ -113,11 +35,14 @@
     </div>
   </header>
 
-  <!-- GALERIE AUTO -->
-  <main class="gallery" id="gallery"></main>
+  <!-- PAGE (YEARBAR + GALLERY) -->
+  <div class="page">
+    <aside class="yearbar" id="yearbar" aria-label="Années"></aside>
+    <main class="gallery" id="gallery"></main>
+  </div>
 
   <!-- LIGHTBOX -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
     <button class="lb-close" id="lbClose" aria-label="Fermer">×</button>
     <button class="lb-btn lb-prev" id="lbPrev" aria-label="Image précédente">‹</button>
     <img id="lbImg" alt="">
@@ -136,7 +61,7 @@
   </script>
 
   <!-- Script dynamique -->
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=1"></script>
 
 </body>
 </html>
