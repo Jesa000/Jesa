@@ -16,11 +16,26 @@ body {
   padding: 0 40px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center; /* ✅ alignement vertical propre (logo / image / contact) */
 }
 
 .logo {
   height: 20px;
+  display: block;
+}
+
+/* ✅ IMAGE CENTRÉE */
+.center-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-img img {
+  height: 20px;        /* même hauteur que le logo */
+  display: block;
+  object-fit: contain;
+  opacity: 0.9;
 }
 
 /* CONTACT */
@@ -92,6 +107,10 @@ a {
 
   .brand {
     padding: 0 10px;
+  }
+
+  .center-img img {
+    height: 18px; /* ✅ un poil plus petit sur tel */
   }
 }
 
