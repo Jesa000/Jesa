@@ -1,6 +1,6 @@
 // script.js
 // Builds the gallery from images.json, adds auto-captions (filename),
-// applies a soft fade-in on load, and enables a lightbox (prev/next/close + keyboard + swipe).
+// soft fade-in on load, and a lightbox (prev/next/close + keyboard + swipe).
 
 (function () {
   const GALLERY_ID = "gallery";
@@ -12,25 +12,25 @@
 
   function $(id) { return document.getElementById(id); }
 
+  function normalizeName(name) {
+    // allow "photo1.jpg" OR "images/photo1.jpg"
+    return (name || "").replace(/^images\//, "");
+  }
+
   function baseName(file) {
-    // "photo27.jpg" -> "photo27"
     const last = (file || "").split("/").pop() || "";
     const parts = last.split(".");
     parts.pop();
     return parts.join(".") || last;
   }
 
-  function withExt(path, ext) {
-    const b = baseName(path);
+  function withExt(name, ext) {
+    const b = baseName(name);
     return `images/${b}.${ext}`;
   }
 
   function lockScroll(lock) {
     document.body.style.overflow = lock ? "hidden" : "";
-  }
-
-  function markLoaded(img) {
-    img.classList.add("loaded");
   }
 
   function buildGallery(items) {
@@ -43,24 +43,32 @@
     gallery.innerHTML = "";
     const anchors = [];
 
-    items.forEach((name, i) => {
-      const thumb = `images/${name}`;          // thumbnail (as listed in JSON)
-      const fullPng = withExt(name, "png");    // expected HD
-      const fullJpg = withExt(name, "jpg");    // fallback HD
+    items.forEach((rawName, i) => {
+      const name = normalizeName(rawName);
+
+      const thumb = `images/${name}`;
+      const fullPng = withExt(name, "png");
+      const fullJpg = withExt(name, "jpg");
 
       const a = document.createElement("a");
       a.className = "work";
-      a.href = fullPng;                 // keep standard behavior
-      a.dataset.full = fullPng;         // for lightbox
-      a.dataset.fallback = fullJpg;     // if png missing
+      a.href = fullPng;
+      a.dataset.full = fullPng;
+      a.dataset.fallback = fullJpg;
       a.dataset.index = String(i);
 
       const img = document.createElement("img");
       img.src = thumb;
       img.alt = baseName(name);
       img.loading = "lazy";
-      img.addEventListener("load", () => markLoaded(img));
-      if (img.complete) markLoaded(img);
+
+      img.addEventListener("load", () => img.classList.add("loaded"));
+      if (img.complete) img.classList.add("loaded");
+
+      // ✅ If the thumbnail doesn't exist, remove the whole item (no broken images)
+      img.onerror = () => {
+        a.remove();
+      };
 
       const cap = document.createElement("div");
       cap.className = "caption";
@@ -73,7 +81,7 @@
       anchors.push(a);
     });
 
-    return anchors;
+    return anchors.filter(a => document.body.contains(a));
   }
 
   function setupLightbox(anchors) {
@@ -98,20 +106,15 @@
       const full = a.dataset.full || a.getAttribute("href") || "";
       const fallback = a.dataset.fallback || "";
 
-      // reset opacity transition
       lbImg.style.opacity = "0";
       lbImg.onerror = null;
 
       lbImg.src = full;
 
-      // fallback if png missing
       lbImg.onerror = () => {
-        if (fallback && lbImg.src !== fallback) {
-          lbImg.src = fallback;
-        }
+        if (fallback && lbImg.src !== fallback) lbImg.src = fallback;
       };
 
-      // force fade-in when loaded
       lbImg.onload = () => {
         requestAnimationFrame(() => (lbImg.style.opacity = "1"));
       };
@@ -154,12 +157,10 @@
     lbNext.addEventListener("click", next);
     lbClose.addEventListener("click", closeLB);
 
-    // click outside image closes
     lb.addEventListener("click", (e) => {
       if (e.target === lb) closeLB();
     });
 
-    // keyboard
     window.addEventListener("keydown", (e) => {
       if (!lb.classList.contains("open")) return;
       if (e.key === "Escape") closeLB();
@@ -167,7 +168,6 @@
       if (e.key === "ArrowRight") next();
     });
 
-    // swipe
     lb.addEventListener("touchstart", (e) => {
       touchStartX = e.changedTouches[0].clientX;
     }, { passive: true });
@@ -190,18 +190,16 @@
       const data = await res.json();
 
       const photos = Array.isArray(data.photos) ? data.photos : [];
-      if (!photos.length) {
-        console.warn("script.js: images.json -> photos[] vide");
-      }
-
       const anchors = buildGallery(photos);
-      setupLightbox(anchors);
+
+      // Rebuild anchors list after removal of broken ones
+      const realAnchors = Array.from(document.querySelectorAll("a.work"));
+      setupLightbox(realAnchors);
     } catch (err) {
       console.error("script.js: erreur chargement / init :", err);
     }
   }
 
-  // run when DOM is ready (safe even if script is at end of body)
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
