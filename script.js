@@ -43,8 +43,10 @@
     gallery.innerHTML = "";
     const anchors = [];
 
-    items.forEach((rawName, i) => {
-      const name = normalizeName(rawName);
+    items.forEach((item, i) => {
+      const name = normalizeName(item.file);
+      const title = item.title || baseName(name);
+
 
       const thumb = `images/${name}`;
       const fullPng = withExt(name, "png");
@@ -59,7 +61,7 @@
 
       const img = document.createElement("img");
       img.src = thumb;
-      img.alt = baseName(name);
+      img.alt = title;
       img.loading = "lazy";
 
       img.addEventListener("load", () => img.classList.add("loaded"));
@@ -72,7 +74,8 @@
 
       const cap = document.createElement("div");
       cap.className = "caption";
-      cap.textContent = baseName(name);
+      cap.textContent = title;
+
 
       a.appendChild(img);
       a.appendChild(cap);

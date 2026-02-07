@@ -1,12 +1,36 @@
 {
   "photos": [
-    "photo1.jpg",
-    "photo2.jpg",
-    "photo3.jpg",
-    "photo4.jpg",
-    "photo5.jpg",
-    "photo6.jpg",
-    "photo7.jpg",
-    "photo8.jpg"
+    {
+      "file": "photo1.jpg",
+      "title": "Titre photo 1"
+    },
+    {
+      "file": "photo2.jpg",
+      "title": "Titre photo 2"
+    },
+    {
+      "file": "photo3.jpg",
+      "title": "Titre photo 3"
+    },
+    {
+      "file": "photo4.jpg",
+      "title": "Titre photo 4"
+    },
+    {
+      "file": "photo5.jpg",
+      "title": "Titre photo 5"
+    },
+    {
+      "file": "photo6.jpg",
+      "title": "Titre photo 6"
+    },
+    {
+      "file": "photo7.jpg",
+      "title": "Titre photo 7"
+    },
+    {
+      "file": "photo8.jpg",
+      "title": "Titre photo 8"
+    }
   ]
 }
