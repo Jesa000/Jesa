@@ -1,36 +1,16 @@
 {
   "photos": [
-    {
-      "file": "photo1.jpg",
-      "title": "Titre photo 1"
-    },
-    {
-      "file": "photo2.jpg",
-      "title": "Titre photo 2"
-    },
-    {
-      "file": "photo3.jpg",
-      "title": "Titre photo 3"
-    },
-    {
-      "file": "photo4.jpg",
-      "title": "Titre photo 4"
-    },
-    {
-      "file": "photo5.jpg",
-      "title": "Titre photo 5"
-    },
-    {
-      "file": "photo6.jpg",
-      "title": "Titre photo 6"
-    },
-    {
-      "file": "photo7.jpg",
-      "title": "Titre photo 7"
-    },
-    {
-      "file": "photo8.jpg",
-      "title": "Titre photo 8"
-    }
+    { "file": "photo1.jpg", "title": "Titre photo 1", "year": 2025 },
+    { "file": "photo2.jpg", "title": "Titre photo 2", "year": 2025 },
+    { "file": "photo3.jpg", "title": "Titre photo 3", "year": 2024 },
+    { "file": "photo4.jpg", "title": "Titre photo 4", "year": 2024 },
+    { "file": "photo5.jpg", "title": "Titre photo 5", "year": 2023 },
+    { "file": "photo6.jpg", "title": "Titre photo 6", "year": 2023 },
+    { "file": "photo7.jpg", "title": "Titre photo 7", "year": 2022 },
+    { "file": "photo8.jpg", "title": "Titre photo 8", "year": 2022 }
+
+    /* Exemple si tu as une version full différente :
+    { "file": "thumbs/photo1.jpg", "full": "full/photo1.jpg", "title": "Titre", "year": 2025 }
+    */
   ]
 }
