@@ -91,17 +91,28 @@
 </head>
 
 <body>
+
   <!-- INTRO -->
   <div id="intro"><img src="images/logo.png" alt="Logo Jesa" /></div>
 
   <!-- HEADER -->
   <header class="top">
     <div class="brand">
+
+      <!-- Gauche : logo -->
       <img class="logo" src="images/logo.png" alt="Logo Jesa" />
+
+      <!-- Centre : nouvelle image -->
+      <div class="center-img">
+        <img src="images/middle.png" alt="Image centrale" />
+      </div>
+
+      <!-- Droite : contact -->
       <div class="contact">
         <a class="email" href="mailto:jeesspro@gmail.com">jeesspro@gmail.com</a>
         <a class="insta" href="https://instagram.com/jesa000" target="_blank" rel="noreferrer">@jesa000</a>
       </div>
+
     </div>
   </header>
 
@@ -116,7 +127,7 @@
     <button class="lb-btn lb-next" id="lbNext" aria-label="Image suivante">›</button>
   </div>
 
-  <!-- INTRO script (seul script inline) -->
+  <!-- INTRO script -->
   <script>
     window.addEventListener("load", () => {
       const intro = document.getElementById("intro");
@@ -127,7 +138,8 @@
     });
   </script>
 
-  <!-- script principal -->
+  <!-- Script dynamique -->
   <script src="script.js?v=3"></script>
+
 </body>
 </html>
