@@ -90,7 +90,7 @@ a {
 }
 
 .email, .insta {
-  font-size: 12px;
+  font-size: 15px;
   text-decoration: underline;
 }
 
@@ -126,7 +126,7 @@ a {
 
 .caption {
   margin-top: 15px;
-  font-size: 12px;
+  font-size: 15px;
   text-align: center;
 }
 
@@ -134,7 +134,7 @@ a {
 @media (max-width: 850px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
-    padding: 0 10px;
+    padding: 0 20px;
     column-gap: 20px;
     row-gap: 30px;
   }
