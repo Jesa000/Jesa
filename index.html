@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jesa</title>
 
-  <!-- Anti-cache CSS -->
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="stylesheet" href="style.css?v=6" />
 
   <style>
-    /* --- INTRO FADE --- */
+    /* INTRO */
     #intro {
       position: fixed;
       inset: 0;
@@ -35,7 +34,7 @@
       pointer-events: none;
     }
 
-    /* --- LIGHTBOX --- */
+    /* LIGHTBOX */
     .lightbox {
       position: fixed;
       inset: 0;
@@ -47,7 +46,6 @@
       padding: 24px;
     }
     .lightbox.open { display: flex; }
-
     .lightbox img {
       max-width: min(1100px, 92vw);
       max-height: 88vh;
@@ -55,7 +53,6 @@
       transition: opacity .25s ease;
     }
     .lightbox.open img { opacity: 1; }
-
     .lb-btn {
       position: fixed;
       top: 50%;
@@ -70,7 +67,6 @@
     .lb-btn:hover { opacity: 1; }
     .lb-prev { left: 10px; }
     .lb-next { right: 10px; }
-
     .lb-close {
       position: fixed;
       top: 12px;
@@ -87,6 +83,7 @@
     @media (max-width: 700px) {
       .lb-prev, .lb-next { display: none !important; }
     }
+
   </style>
 </head>
 
@@ -101,35 +98,24 @@
       <img class="logo" src="images/logo.png" alt="Logo Jesa" />
       <div class="contact">
         <a class="email" href="mailto:jeesspro@gmail.com">jeesspro@gmail.com</a>
-        <a class="insta" href="https://instagram.com/jesa000" target="_blank" rel="noreferrer">@jesa000</a>
+        <a class="insta" href="https://instagram.com/jesa000" target="_blank">@jesa000</a>
       </div>
     </div>
   </header>
 
-  <!-- GALERIE (remplie automatiquement par script.js) -->
+  <!-- GALERIE AUTO-GÉNÉRÉE -->
   <main class="gallery" id="gallery"></main>
 
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lb-close" id="lbClose" aria-label="Fermer">×</button>
-    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Image précédente">‹</button>
+    <button class="lb-close" id="lbClose">×</button>
+    <button class="lb-btn lb-prev" id="lbPrev">‹</button>
     <img id="lbImg" alt="">
-    <button class="lb-btn lb-next" id="lbNext" aria-label="Image suivante">›</button>
+    <button class="lb-btn lb-next" id="lbNext">›</button>
   </div>
 
-  <!-- INTRO script (doit être dans le body, avant la fin) -->
-  <script>
-    window.addEventListener("load", () => {
-      const intro = document.getElementById("intro");
-      setTimeout(() => {
-        intro.classList.add("hide");
-        setTimeout(() => intro.remove(), 400);
-      }, 2700);
-    });
-  </script>
-
-  <!-- Script qui génère la galerie depuis images.json + gère captions + fade + lightbox -->
-  <script src="script.js"></script>
+  <!-- SCRIPT DYNAMIQUE -->
+  <script src="script.js?v=2"></script>
 
 </body>
 </html>
