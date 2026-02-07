@@ -43,14 +43,15 @@ a {
 /* Logo principal */
 .logo {
   height: 20px;
-  width: auto;
+  width: auto;      /* ← empêche l’étirement */
+  object-fit: contain; /* ← garde les proportions */
 }
 
 /* Petite image sous le logo */
 .sublogo {
-  height: 22px;       /* taille petite */
+  height: 20px;       /* taille petite */
   width: auto;
-  opacity: 0.9;
+  opacity: 1;
   object-fit: contain;
 }
 
