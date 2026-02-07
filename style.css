@@ -2,10 +2,18 @@
 /* GLOBAL */
 /* -------------------- */
 
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("fonts/HelveticaNeue.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 body {
   margin: 0;
   background: white;
-  font-family: sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
   color: #111;
 }
 
