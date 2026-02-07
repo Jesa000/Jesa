@@ -1,3 +1,7 @@
+/* -------------------- */
+/* GLOBAL */
+/* -------------------- */
+
 body {
   margin: 0;
   background: white;
@@ -5,41 +9,52 @@ body {
   color: #111;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* -------------------- */
 /* HEADER */
+/* -------------------- */
+
 .top {
   padding: 40px 0 40px;
 }
 
+/* Structure alignée avec la galerie */
 .brand {
   max-width: 1800px;
   margin: 0 auto;
   padding: 0 40px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* Logo + sous-logo empilés à gauche, contact à droite */
+  align-items: flex-start;
 }
 
-/* LOGO PRINCIPAL */
-.logo {
-  height: 20px;
-  display: block;
-}
-
-/* IMAGE SOUS LE LOGO */
+/* Left block = logo + sub-image */
 .left-block {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* espace entre logo et image */
+  gap: 10px; /* espace entre logo et petite image */
 }
 
-.sublogo {
+/* Logo principal */
+.logo {
   height: 20px;
-  display: block;
-  object-fit: contain;
-  opacity: 0.9;
+  width: auto;
 }
 
-/* CONTACT */
+/* Petite image sous le logo */
+.sublogo {
+  height: 22px;       /* taille petite */
+  width: auto;
+  opacity: 0.9;
+  object-fit: contain;
+}
+
+/* CONTACT (à droite) */
 .contact {
   display: flex;
   flex-direction: column;
@@ -53,29 +68,33 @@ body {
   text-decoration: underline;
 }
 
-a {
-  color: inherit;
-}
 
+/* -------------------- */
 /* GALLERY */
+/* -------------------- */
+
 .gallery {
   max-width: 1800px;
   margin: 60px auto;
   padding: 0 40px;
   display: grid;
+
+  /* Desktop */
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 90px;   /* espace horizontal */
-  row-gap: 120px;     /* espace vertical */
+
+  /* Espacements larges */
+  column-gap: 90px;
+  row-gap: 120px;
 }
 
-/* Bloc image + caption */
+/* Chaque item */
 .work {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-decoration: none;
 }
 
+/* Images fade-in */
 .gallery img {
   width: 100%;
   display: block;
@@ -89,7 +108,7 @@ a {
   transform: translateY(0);
 }
 
-/* Caption */
+/* Caption sous chaque image */
 .caption {
   margin-top: 10px;
   font-size: 12px;
@@ -97,7 +116,11 @@ a {
   opacity: 0.75;
 }
 
+
+/* -------------------- */
 /* MOBILE */
+/* -------------------- */
+
 @media (max-width: 850px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
@@ -107,15 +130,46 @@ a {
   }
 
   .brand {
-    padding: 0 10px;
+    padding: 0 10px; /* alignement identique galerie */
   }
 
   .sublogo {
-    height: 18px; /* un peu plus petit sur téléphone */
+    height: 18px; /* petite image encore plus petite sur mobile */
   }
 }
 
-/* Lightbox */
+
+/* -------------------- */
+/* LIGHTBOX */
+/* -------------------- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.97);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 24px;
+}
+
+.lightbox.open {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: min(900px, 90vw);
+  max-height: 85vh;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.lightbox.open img {
+  opacity: 1;
+}
+
+/* Boutons */
 .lb-btn,
 .lb-close {
   color: #555 !important;
@@ -124,4 +178,11 @@ a {
 .lb-btn:hover,
 .lb-close:hover {
   color: #000 !important;
+}
+
+@media (max-width: 700px) {
+  .lb-prev,
+  .lb-next {
+    display: none !important;
+  }
 }
