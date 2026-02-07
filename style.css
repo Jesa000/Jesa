@@ -9,7 +9,6 @@
   font-style: normal;
 }
 
-
 body {
   margin: 0;
   background: white;
@@ -23,6 +22,38 @@ a {
 }
 
 /* -------------------- */
+/* INTRO */
+/* -------------------- */
+
+#intro {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+#intro img {
+  width: 120px;
+  opacity: 0;
+  animation: fadeIn 0.9s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#intro.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* -------------------- */
 /* HEADER */
 /* -------------------- */
 
@@ -30,7 +61,6 @@ a {
   padding: 40px 0 40px;
 }
 
-/* Structure alignée avec la galerie */
 .brand {
   max-width: 1800px;
   margin: 0 auto;
@@ -40,36 +70,32 @@ a {
   align-items: flex-start;
 }
 
-/* Left block = logo + sub-image */
 .left-block {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: flex-start; /* ✅ force tout à coller à gauche */
+  align-items: flex-start;
 }
 
-/* Logo principal */
 .logo {
   height: 20px;
   width: auto;
   max-width: 100%;
-  display: block;           /* ✅ évite les décalages inline */
+  display: block;
   object-fit: contain;
-  align-self: flex-start;   /* ✅ ancrage gauche */
+  align-self: flex-start;
 }
 
-/* Petite image sous le logo */
 .sublogo {
   height: 18px;
   width: auto;
   max-width: 100%;
-  display: block;           /* ✅ */
+  display: block;
   opacity: 1;
   object-fit: contain;
-  align-self: flex-start;   /* ✅ ancrage gauche */
+  align-self: flex-start;
 }
 
-/* CONTACT (à droite) */
 .contact {
   display: flex;
   flex-direction: column;
@@ -84,19 +110,67 @@ a {
 }
 
 /* -------------------- */
-/* GALLERY */
+/* PAGE LAYOUT (YEARBAR + GALLERY) */
 /* -------------------- */
 
-.gallery {
+.page {
   max-width: 1800px;
   margin: 60px auto;
   padding: 0 40px;
   display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 30px;
+}
 
+/* -------------------- */
+/* YEAR BAR */
+/* -------------------- */
+
+.yearbar {
+  position: sticky;
+  top: 120px; /* ajuste si ton header change */
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  user-select: none;
+}
+
+.yearbar button {
+  background: transparent;
+  border: none;
+  padding: 6px 0;
+  text-align: left;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.35;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.yearbar button:hover {
+  opacity: 0.8;
+}
+
+.yearbar button.active {
+  opacity: 1;
+  transform: translateX(2px);
+  text-decoration: underline;
+}
+
+/* -------------------- */
+/* GALLERY */
+/* -------------------- */
+
+.gallery {
+  display: grid;
   grid-template-columns: repeat(4, 1fr);
-
   column-gap: 90px;
   row-gap: 120px;
+}
+
+/* Sections années (ancre de scroll) */
+.year-section {
+  scroll-margin-top: 120px; /* pour que ça tombe bien sous le header */
 }
 
 /* Chaque item */
@@ -120,7 +194,7 @@ a {
   transform: translateY(0);
 }
 
-/* Caption sous chaque image */
+/* Caption */
 .caption {
   margin-top: 15px;
   font-size: 12px;
@@ -128,29 +202,39 @@ a {
   opacity: 1;
 }
 
+/* Message erreur */
+.gallery-message {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
 /* -------------------- */
 /* MOBILE */
 /* -------------------- */
 
 @media (max-width: 850px) {
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
+  .page {
+    grid-template-columns: 1fr;
     padding: 0 10px;
-    column-gap: 20px;
-    row-gap: 30px;
+  }
+
+  .yearbar {
+    display: none;
   }
 
   .brand {
     padding: 0 10px;
   }
 
-  .logo {
-    height: 20px;
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 20px;
+    row-gap: 30px;
   }
 
-  .sublogo {
-    height: 18px;
-  }
+  .logo { height: 20px; }
+  .sublogo { height: 18px; }
 }
 
 /* -------------------- */
@@ -173,8 +257,8 @@ a {
 }
 
 .lightbox img {
-  max-width: min(900px, 90vw);
-  max-height: 85vh;
+  max-width: min(1100px, 92vw);
+  max-height: 88vh;
   opacity: 0;
   transition: opacity .25s ease;
 }
@@ -184,19 +268,38 @@ a {
 }
 
 /* Boutons */
-.lb-btn,
-.lb-close {
-  color: #555 !important;
+.lb-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 12px 14px;
+  opacity: 0.6;
+  color: #555;
 }
 
-.lb-btn:hover,
-.lb-close:hover {
-  color: #000 !important;
+.lb-btn:hover { opacity: 1; color: #000; }
+.lb-prev { left: 10px; }
+.lb-next { right: 10px; }
+
+.lb-close {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  padding: 10px 12px;
+  opacity: 0.6;
+  color: #555;
 }
+
+.lb-close:hover { opacity: 1; color: #000; }
 
 @media (max-width: 700px) {
-  .lb-prev,
-  .lb-next {
-    display: none !important;
-  }
+  .lb-prev, .lb-next { display: none !important; }
 }
