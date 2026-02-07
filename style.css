@@ -14,7 +14,6 @@ a {
   text-decoration: none;
 }
 
-
 /* -------------------- */
 /* HEADER */
 /* -------------------- */
@@ -37,22 +36,29 @@ a {
 .left-block {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* espace entre logo et petite image */
+  gap: 10px;
+  align-items: flex-start; /* ✅ force tout à coller à gauche */
 }
 
 /* Logo principal */
 .logo {
   height: 20px;
-  width: auto;      /* ← empêche l’étirement */
-  object-fit: contain; /* ← garde les proportions */
+  width: auto;
+  max-width: 100%;
+  display: block;           /* ✅ évite les décalages inline */
+  object-fit: contain;
+  align-self: flex-start;   /* ✅ ancrage gauche */
 }
 
 /* Petite image sous le logo */
 .sublogo {
-  height: 20px;       /* taille petite */
+  height: 18px;
   width: auto;
+  max-width: 100%;
+  display: block;           /* ✅ */
   opacity: 1;
   object-fit: contain;
+  align-self: flex-start;   /* ✅ ancrage gauche */
 }
 
 /* CONTACT (à droite) */
@@ -69,7 +75,6 @@ a {
   text-decoration: underline;
 }
 
-
 /* -------------------- */
 /* GALLERY */
 /* -------------------- */
@@ -80,10 +85,8 @@ a {
   padding: 0 40px;
   display: grid;
 
-  /* Desktop */
   grid-template-columns: repeat(4, 1fr);
 
-  /* Espacements larges */
   column-gap: 90px;
   row-gap: 120px;
 }
@@ -111,12 +114,11 @@ a {
 
 /* Caption sous chaque image */
 .caption {
-  margin-top: 10px;
+  margin-top: 15px;
   font-size: 12px;
   text-align: center;
-  opacity: 0.75;
+  opacity: 1;
 }
-
 
 /* -------------------- */
 /* MOBILE */
@@ -131,14 +133,17 @@ a {
   }
 
   .brand {
-    padding: 0 10px; /* alignement identique galerie */
+    padding: 0 10px;
+  }
+
+  .logo {
+    height: 20px;
   }
 
   .sublogo {
-    height: 18px; /* petite image encore plus petite sur mobile */
+    height: 18px;
   }
 }
-
 
 /* -------------------- */
 /* LIGHTBOX */
