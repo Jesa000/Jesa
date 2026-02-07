@@ -1,9 +1,11 @@
 // script.js
-// Builds the gallery from images.json, adds auto-captions (filename),
-// soft fade-in on load, and a lightbox (prev/next/close + keyboard + swipe).
+// Gallery from images.json grouped by year + left year bar (Apple Photos style)
+// + Lightbox (prev/next/close + keyboard + swipe)
 
 (function () {
   const GALLERY_ID = "gallery";
+  const YEARBAR_ID = "yearbar";
+
   const LIGHTBOX_ID = "lightbox";
   const LB_IMG_ID = "lbImg";
   const LB_PREV_ID = "lbPrev";
@@ -12,9 +14,9 @@
 
   function $(id) { return document.getElementById(id); }
 
-  function normalizeName(name) {
-    // allow "photo1.jpg" OR "images/photo1.jpg"
-    return (name || "").replace(/^images\//, "");
+  function normalizePath(p) {
+    // allow "photo.jpg" OR "images/photo.jpg"
+    return (p || "").replace(/^images\//, "");
   }
 
   function baseName(file) {
@@ -24,67 +26,159 @@
     return parts.join(".") || last;
   }
 
-  function withExt(name, ext) {
-    const b = baseName(name);
-    return `images/${b}.${ext}`;
-  }
-
   function lockScroll(lock) {
     document.body.style.overflow = lock ? "hidden" : "";
   }
 
-  function buildGallery(items) {
+  function groupByYear(items) {
+    const map = new Map();
+
+    items.forEach((it) => {
+      const y = (it.year !== undefined && it.year !== null && it.year !== "")
+        ? String(it.year)
+        : "Autres";
+
+      if (!map.has(y)) map.set(y, []);
+      map.get(y).push(it);
+    });
+
+    // tri: années numériques desc, "Autres" à la fin
+    const keys = Array.from(map.keys()).sort((a, b) => {
+      if (a === "Autres") return 1;
+      if (b === "Autres") return -1;
+
+      const na = Number(a), nb = Number(b);
+      if (!Number.isNaN(na) && !Number.isNaN(nb)) return nb - na;
+      return String(b).localeCompare(String(a));
+    });
+
+    return keys.map(k => [k, map.get(k)]);
+  }
+
+  function showMessage(text) {
+    const gallery = $(GALLERY_ID);
+    if (!gallery) return;
+    gallery.innerHTML = `<div class="gallery-message">${text}</div>`;
+  }
+
+  function buildGalleryByYear(items) {
     const gallery = $(GALLERY_ID);
     if (!gallery) {
       console.error(`script.js: #${GALLERY_ID} introuvable`);
-      return [];
+      return { years: [], anchors: [] };
     }
 
     gallery.innerHTML = "";
+
     const anchors = [];
+    const years = [];
 
-    items.forEach((item, i) => {
-      const name = normalizeName(item.file);
-      const title = item.title || baseName(name);
+    const groups = groupByYear(items);
 
+    groups.forEach(([year, list]) => {
+      years.push(year);
 
-      const thumb = `images/${name}`;
-      const fullPng = withExt(name, "png");
-      const fullJpg = withExt(name, "jpg");
+      // section ancre
+      const section = document.createElement("section");
+      section.className = "year-section";
+      section.dataset.year = year;
+      section.id = `year-${year}`;
 
-      const a = document.createElement("a");
-      a.className = "work";
-      a.href = fullPng;
-      a.dataset.full = fullPng;
-      a.dataset.fallback = fullJpg;
-      a.dataset.index = String(i);
+      // IMPORTANT: display: contents pour garder la grid de .gallery
+      section.style.display = "contents";
 
-      const img = document.createElement("img");
-      img.src = thumb;
-      img.alt = title;
-      img.loading = "lazy";
+      list.forEach((item) => {
+        const file = normalizePath(item.file);
+        const full = normalizePath(item.full || item.file);
+        const title = item.title || baseName(file || full);
 
-      img.addEventListener("load", () => img.classList.add("loaded"));
-      if (img.complete) img.classList.add("loaded");
+        const thumbSrc = `images/${file}`;
+        const fullSrc = `images/${full}`;
 
-      // ✅ If the thumbnail doesn't exist, remove the whole item (no broken images)
-      img.onerror = () => {
-        a.remove();
-      };
+        const a = document.createElement("a");
+        a.className = "work";
+        a.href = fullSrc;
+        a.dataset.full = fullSrc;
+        a.dataset.title = title;
 
-      const cap = document.createElement("div");
-      cap.className = "caption";
-      cap.textContent = title;
+        const img = document.createElement("img");
+        img.src = thumbSrc;
+        img.alt = title;
+        img.loading = "lazy";
+        img.decoding = "async";
 
+        img.addEventListener("load", () => img.classList.add("loaded"));
+        if (img.complete) img.classList.add("loaded");
 
-      a.appendChild(img);
-      a.appendChild(cap);
-      gallery.appendChild(a);
+        // si thumb cassé -> on retire l'item
+        img.onerror = () => a.remove();
 
-      anchors.push(a);
+        const cap = document.createElement("div");
+        cap.className = "caption";
+        cap.textContent = title;
+
+        a.appendChild(img);
+        a.appendChild(cap);
+
+        section.appendChild(a);
+        anchors.push(a);
+      });
+
+      gallery.appendChild(section);
     });
 
-    return anchors.filter(a => document.body.contains(a));
+    return { years, anchors };
+  }
+
+  function setupYearbar(years) {
+    const bar = $(YEARBAR_ID);
+    if (!bar) return;
+
+    bar.innerHTML = "";
+    const buttons = new Map();
+
+    years.forEach((y) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = y;
+
+      btn.addEventListener("click", () => {
+        const target = document.getElementById(`year-${y}`);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      bar.appendChild(btn);
+      buttons.set(y, btn);
+    });
+
+    const sections = Array.from(document.querySelectorAll(".year-section"));
+
+    // met à jour le bouton actif
+    function setActive(year) {
+      buttons.forEach((btn, y) => {
+        btn.classList.toggle("active", y === year);
+      });
+    }
+
+    // Observer : quelle section est la plus proche du haut
+    const io = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+      if (!visible.length) return;
+      const currentYear = visible[0].target.dataset.year;
+      if (currentYear) setActive(currentYear);
+    }, {
+      root: null,
+      threshold: 0.01,
+      rootMargin: "-20% 0px -70% 0px"
+    });
+
+    sections.forEach(s => io.observe(s));
+
+    // initial
+    if (years[0]) setActive(years[0]);
   }
 
   function setupLightbox(anchors) {
@@ -95,7 +189,7 @@
     const lbClose = $(LB_CLOSE_ID);
 
     if (!lb || !lbImg || !lbPrev || !lbNext || !lbClose) {
-      console.error("script.js: éléments lightbox manquants (ids: lightbox/lbImg/lbPrev/lbNext/lbClose)");
+      console.error("script.js: éléments lightbox manquants");
       return;
     }
 
@@ -107,16 +201,13 @@
       if (!a) return;
 
       const full = a.dataset.full || a.getAttribute("href") || "";
-      const fallback = a.dataset.fallback || "";
+      const title = a.dataset.title || "";
 
       lbImg.style.opacity = "0";
       lbImg.onerror = null;
 
       lbImg.src = full;
-
-      lbImg.onerror = () => {
-        if (fallback && lbImg.src !== fallback) lbImg.src = fallback;
-      };
+      lbImg.alt = title;
 
       lbImg.onload = () => {
         requestAnimationFrame(() => (lbImg.style.opacity = "1"));
@@ -193,13 +284,25 @@
       const data = await res.json();
 
       const photos = Array.isArray(data.photos) ? data.photos : [];
-      const anchors = buildGallery(photos);
+      if (!photos.length) {
+        showMessage("Aucune image pour le moment.");
+        return;
+      }
 
-      // Rebuild anchors list after removal of broken ones
+      const { years } = buildGalleryByYear(photos);
+      setupYearbar(years);
+
+      // Re-scan anchors after broken thumbs are removed
       const realAnchors = Array.from(document.querySelectorAll("a.work"));
+      if (!realAnchors.length) {
+        showMessage("Images introuvables (vérifie le dossier /images).");
+        return;
+      }
+
       setupLightbox(realAnchors);
     } catch (err) {
       console.error("script.js: erreur chargement / init :", err);
+      showMessage("Erreur de chargement. Vérifie images.json et le dossier /images.");
     }
   }
 
