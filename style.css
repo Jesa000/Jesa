@@ -97,11 +97,11 @@ a {
 /* GALLERY */
 .gallery {
   max-width: 1800px;
-  margin: 60px auto;
+  margin: 40px auto;
   padding: 0 40px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 90px;
+  column-gap: 60px;
   row-gap: 120px;
 }
 
