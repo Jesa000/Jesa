@@ -1,82 +1,266 @@
-<script>
-  /* INTRO */
-  window.addEventListener("load", () => {
-    const intro = document.getElementById("intro");
-    setTimeout(() => {
-      intro.classList.add("hide");
-      setTimeout(() => intro.remove(), 400);
-    }, 2700);
-  });
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jesa</title>
 
-  /* Galery fade-in */
-  document.querySelectorAll(".gallery img").forEach(img => {
-    const load = () => img.classList.add("loaded");
-    img.addEventListener("load", load);
-    if (img.complete) load();
-  });
+  <!-- Anti-cache CSS -->
+  <link rel="stylesheet" href="style.css?v=6" />
 
-  /* ✅ NOUVEAUTÉ : ajoute automatiquement un texte sous chaque image (nom du fichier) */
-  document.querySelectorAll(".work img").forEach(img => {
-    const src = img.getAttribute("src");
-    if (!src) return;
+  <style>
+    /* --- INTRO FADE --- */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.4s ease;
+    }
 
-    // photo27.jpg -> photo27
-    const fileName = src.split("/").pop().split(".")[0];
+    #intro img {
+      width: 120px;
+      opacity: 0;
+      animation: fadeIn 0.9s ease forwards;
+    }
 
-    // évite d'ajouter 2 fois si tu refresh / modifies
-    const already = img.parentElement.querySelector(".caption");
-    if (already) return;
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-    const caption = document.createElement("div");
-    caption.className = "caption";
-    caption.textContent = fileName;
+    #intro.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
 
-    img.insertAdjacentElement("afterend", caption);
-  });
+    /* --- LIGHTBOX (inchangé) --- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.96);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9998;
+      padding: 24px;
+    }
+    .lightbox.open { display: flex; }
 
-  /* Lightbox */
-  const links = Array.from(document.querySelectorAll("a.work"));
-  const lb = document.getElementById("lightbox");
-  const lbImg = document.getElementById("lbImg");
-  const lbPrev = document.getElementById("lbPrev");
-  const lbNext = document.getElementById("lbNext");
-  const lbClose = document.getElementById("lbClose");
-  let index = 0;
+    .lightbox img {
+      max-width: min(1100px, 92vw);
+      max-height: 88vh;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .lightbox.open img { opacity: 1; }
 
-  function openLB(i) {
-    index = i;
-    lbImg.src = links[index].getAttribute("href");
-    lb.classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-  function closeLB() {
-    lb.classList.remove("open");
-    lbImg.src = "";
-    document.body.style.overflow = "";
-  }
-  function prev() {
-    index = (index - 1 + links.length) % links.length;
-    lbImg.src = links[index].getAttribute("href");
-  }
-  function next() {
-    index = (index + 1) % links.length;
-    lbImg.src = links[index].getAttribute("href");
-  }
+    .lb-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 12px 14px;
+      opacity: 0.6;
+    }
+    .lb-btn:hover { opacity: 1; }
+    .lb-prev { left: 10px; }
+    .lb-next { right: 10px; }
 
-  links.forEach((a, i) => a.addEventListener("click", e => {
-    e.preventDefault();
-    openLB(i);
-  }));
+    .lb-close {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      padding: 10px 12px;
+      opacity: 0.6;
+    }
+    .lb-close:hover { opacity: 1; }
 
-  lbPrev.addEventListener("click", prev);
-  lbNext.addEventListener("click", next);
-  lbClose.addEventListener("click", closeLB);
-  lb.addEventListener("click", e => { if (e.target === lb) closeLB(); });
+    @media (max-width: 700px) {
+      .lb-prev, .lb-next { display: none !important; }
+    }
+  </style>
+</head>
 
-  window.addEventListener("keydown", e => {
-    if (!lb.classList.contains("open")) return;
-    if (e.key === "Escape") closeLB();
-    if (e.key === "ArrowLeft") prev();
-    if (e.key === "ArrowRight") next();
-  });
-</script>
+<body>
+
+  <!-- INTRO -->
+  <div id="intro"><img src="images/logo.png" alt="Logo Jesa" /></div>
+
+  <!-- HEADER -->
+  <header class="top">
+    <div class="brand">
+      <img class="logo" src="images/logo.png" alt="Logo Jesa" />
+      <div class="contact">
+        <a class="email" href="mailto:jeesspro@gmail.com">jeesspro@gmail.com</a>
+        <a class="insta" href="https://instagram.com/jesa000" target="_blank">@jesa000</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- GALERIE -->
+  <main class="gallery" id="gallery">
+
+    <!-- IMAGES 1 À 50 — captions ajoutés automatiquement -->
+    <a href="images/photo1.png"  class="work"><img src="images/photo1.jpg"  loading="lazy"></a>
+    <a href="images/photo2.png"  class="work"><img src="images/photo2.jpg"  loading="lazy"></a>
+    <a href="images/photo3.png"  class="work"><img src="images/photo3.jpg"  loading="lazy"></a>
+    <a href="images/photo4.png"  class="work"><img src="images/photo4.jpg"  loading="lazy"></a>
+    <a href="images/photo5.png"  class="work"><img src="images/photo5.jpg"  loading="lazy"></a>
+    <a href="images/photo6.png"  class="work"><img src="images/photo6.jpg"  loading="lazy"></a>
+    <a href="images/photo7.png"  class="work"><img src="images/photo7.jpg"  loading="lazy"></a>
+    <a href="images/photo8.png"  class="work"><img src="images/photo8.jpg"  loading="lazy"></a>
+    <a href="images/photo9.png"  class="work"><img src="images/photo9.jpg"  loading="lazy"></a>
+    <a href="images/photo10.png" class="work"><img src="images/photo10.jpg" loading="lazy"></a>
+    <a href="images/photo11.png" class="work"><img src="images/photo11.jpg" loading="lazy"></a>
+    <a href="images/photo12.png" class="work"><img src="images/photo12.jpg" loading="lazy"></a>
+    <a href="images/photo13.png" class="work"><img src="images/photo13.jpg" loading="lazy"></a>
+    <a href="images/photo14.png" class="work"><img src="images/photo14.jpg" loading="lazy"></a>
+    <a href="images/photo15.png" class="work"><img src="images/photo15.jpg" loading="lazy"></a>
+    <a href="images/photo16.png" class="work"><img src="images/photo16.jpg" loading="lazy"></a>
+    <a href="images/photo17.png" class="work"><img src="images/photo17.jpg" loading="lazy"></a>
+    <a href="images/photo18.png" class="work"><img src="images/photo18.jpg" loading="lazy"></a>
+    <a href="images/photo19.png" class="work"><img src="images/photo19.jpg" loading="lazy"></a>
+    <a href="images/photo20.png" class="work"><img src="images/photo20.jpg" loading="lazy"></a>
+
+    <a href="images/photo21.png" class="work"><img src="images/photo21.jpg" loading="lazy"></a>
+    <a href="images/photo22.png" class="work"><img src="images/photo22.jpg" loading="lazy"></a>
+    <a href="images/photo23.png" class="work"><img src="images/photo23.jpg" loading="lazy"></a>
+    <a href="images/photo24.png" class="work"><img src="images/photo24.jpg" loading="lazy"></a>
+    <a href="images/photo25.png" class="work"><img src="images/photo25.jpg" loading="lazy"></a>
+
+    <a href="images/photo26.png" class="work"><img src="images/photo26.jpg" loading="lazy"></a>
+    <a href="images/photo27.png" class="work"><img src="images/photo27.jpg" loading="lazy"></a>
+    <a href="images/photo28.png" class="work"><img src="images/photo28.jpg" loading="lazy"></a>
+    <a href="images/photo29.png" class="work"><img src="images/photo29.jpg" loading="lazy"></a>
+    <a href="images/photo30.png" class="work"><img src="images/photo30.jpg" loading="lazy"></a>
+
+    <a href="images/photo31.png" class="work"><img src="images/photo31.jpg" loading="lazy"></a>
+    <a href="images/photo32.png" class="work"><img src="images/photo32.jpg" loading="lazy"></a>
+    <a href="images/photo33.png" class="work"><img src="images/photo33.jpg" loading="lazy"></a>
+    <a href="images/photo34.png" class="work"><img src="images/photo34.jpg" loading="lazy"></a>
+    <a href="images/photo35.png" class="work"><img src="images/photo35.jpg" loading="lazy"></a>
+
+    <a href="images/photo36.png" class="work"><img src="images/photo36.jpg" loading="lazy"></a>
+    <a href="images/photo37.png" class="work"><img src="images/photo37.jpg" loading="lazy"></a>
+    <a href="images/photo38.png" class="work"><img src="images/photo38.jpg" loading="lazy"></a>
+    <a href="images/photo39.png" class="work"><img src="images/photo39.jpg" loading="lazy"></a>
+    <a href="images/photo40.png" class="work"><img src="images/photo40.jpg" loading="lazy"></a>
+
+    <a href="images/photo41.png" class="work"><img src="images/photo41.jpg" loading="lazy"></a>
+    <a href="images/photo42.png" class="work"><img src="images/photo42.jpg" loading="lazy"></a>
+    <a href="images/photo43.png" class="work"><img src="images/photo43.jpg" loading="lazy"></a>
+    <a href="images/photo44.png" class="work"><img src="images/photo44.jpg" loading="lazy"></a>
+    <a href="images/photo45.png" class="work"><img src="images/photo45.jpg" loading="lazy"></a>
+
+    <a href="images/photo46.png" class="work"><img src="images/photo46.jpg" loading="lazy"></a>
+    <a href="images/photo47.png" class="work"><img src="images/photo47.jpg" loading="lazy"></a>
+    <a href="images/photo48.png" class="work"><img src="images/photo48.jpg" loading="lazy"></a>
+    <a href="images/photo49.png" class="work"><img src="images/photo49.jpg" loading="lazy"></a>
+    <a href="images/photo50.png" class="work"><img src="images/photo50.jpg" loading="lazy"></a>
+
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-close" id="lbClose">×</button>
+    <button class="lb-btn lb-prev" id="lbPrev">‹</button>
+    <img id="lbImg" alt="">
+    <button class="lb-btn lb-next" id="lbNext">›</button>
+  </div>
+
+  <script>
+    /* INTRO */
+    window.addEventListener("load", () => {
+      const intro = document.getElementById("intro");
+      setTimeout(() => {
+        intro.classList.add("hide");
+        setTimeout(() => intro.remove(), 400);
+      }, 2700);
+    });
+
+    /* FADE-IN */
+    document.querySelectorAll(".gallery img").forEach(img => {
+      const load = () => img.classList.add("loaded");
+      img.addEventListener("load", load);
+      if (img.complete) load();
+    });
+
+    /* AUTO CAPTION */
+    document.querySelectorAll(".work img").forEach(img => {
+      const src = img.getAttribute("src");
+      if (!src) return;
+      const fileName = src.split("/").pop().split(".")[0];
+      if (!img.parentElement.querySelector(".caption")) {
+        const cap = document.createElement("div");
+        cap.className = "caption";
+        cap.textContent = fileName;
+        img.insertAdjacentElement("afterend", cap);
+      }
+    });
+
+    /* LIGHTBOX */
+    const links = Array.from(document.querySelectorAll("a.work"));
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbPrev = document.getElementById("lbPrev");
+    const lbNext = document.getElementById("lbNext");
+    const lbClose = document.getElementById("lbClose");
+    let index = 0;
+
+    function openLB(i) {
+      index = i;
+      lbImg.src = links[i].getAttribute("href");
+      lb.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLB() {
+      lb.classList.remove("open");
+      lbImg.src = "";
+      document.body.style.overflow = "";
+    }
+
+    function prev() {
+      index = (index - 1 + links.length) % links.length;
+      lbImg.src = links[index].getAttribute("href");
+    }
+
+    function next() {
+      index = (index + 1) % links.length;
+      lbImg.src = links[index].getAttribute("href");
+    }
+
+    links.forEach((a, i) => {
+      a.addEventListener("click", e => {
+        e.preventDefault();
+        openLB(i);
+      });
+    });
+
+    lbPrev.addEventListener("click", prev);
+    lbNext.addEventListener("click", next);
+    lbClose.addEventListener("click", closeLB);
+    lb.addEventListener("click", e => { if (e.target === lb) closeLB(); });
+
+    window.addEventListener("keydown", e => {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") closeLB();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    });
+  </script>
+
+</body>
+</html>
