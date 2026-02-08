@@ -101,7 +101,7 @@ a {
   padding: 0 40px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 40px;
+  column-gap: 60px;
   row-gap: 70px;
 }
 
@@ -134,8 +134,8 @@ a {
 @media (max-width: 850px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
-    padding: 0 20px;
-    column-gap: 20px;
+    padding: 0 40px;
+    column-gap: 40px;
     row-gap: 30px;
   }
 }
