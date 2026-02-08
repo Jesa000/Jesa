@@ -132,6 +132,10 @@ a {
 
 /* MOBILE */
 @media (max-width: 850px) {
+  .brand {
+    padding: 0 30px; /* aligné EXACTEMENT avec la gallery */
+  }
+
   .gallery {
     grid-template-columns: repeat(2, 1fr);
     padding: 0 30px;
@@ -139,7 +143,6 @@ a {
     row-gap: 30px;
   }
 }
-
 /* LIGHTBOX */
 .lightbox {
   position: fixed;
