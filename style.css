@@ -131,16 +131,16 @@ a {
 }
 
 /* MOBILE */
-@media (max-width: 850px) {
+@media (max-width: 900px) {
   .brand {
-    padding: 0 30px; /* aligné EXACTEMENT avec la gallery */
+    padding: 0 20px; /* aligné EXACTEMENT avec la gallery */
   }
 
   .gallery {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0 30px;
-    column-gap: 40px;
-    row-gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 20px;
+    column-gap: 20px;
+    row-gap: 20px;
   }
 }
 /* LIGHTBOX */
