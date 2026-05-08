@@ -94,8 +94,8 @@ a {
   padding: 0 40px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  column-gap: 60px;
-  row-gap: 70px;
+  column-gap: 30px;
+  row-gap: 50px;
 }
 
 .work {
