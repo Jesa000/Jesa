@@ -204,11 +204,11 @@ a {
 /* MOBILE UNIQUEMENT */
 @media (max-width: 600px) {
   .top {
-    padding: 20px 0 28px;
+    padding: 18px 0 24px;
   }
 
   .brand {
-    padding: 0 14px;
+    padding: 0 8px;
   }
 
   .logo {
@@ -222,15 +222,15 @@ a {
 
   .gallery {
     grid-template-columns: repeat(4, 1fr);
-    margin: 20px auto 50px;
-    padding: 0 14px;
-    column-gap: 5px;
-    row-gap: 16px;
+    margin: 16px auto 40px;
+    padding: 0 6px;
+    column-gap: 3px;
+    row-gap: 14px;
   }
 
   .caption {
-    margin-top: 6px;
-    font-size: 9px;
+    margin-top: 5px;
+    font-size: 8px;
     opacity: 0.5;
   }
 
