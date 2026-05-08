@@ -8,7 +8,9 @@
   const LB_NEXT_ID = "lbNext";
   const LB_CLOSE_ID = "lbClose";
 
-  function $(id) { return document.getElementById(id); }
+  function $(id) {
+    return document.getElementById(id);
+  }
 
   function normalizePath(p) {
     return (p || "").replace(/^images\//, "");
@@ -38,7 +40,13 @@
     gallery.innerHTML = "";
     const anchors = [];
 
-    items.forEach((item) => {
+    const isMobile = window.matchMedia("(max-width: 600px)").matches;
+
+    items.forEach((item, index) => {
+      // Sur mobile uniquement, on cache la 4e photo.
+      // index === 3 correspond à photo4 dans ton images.json.
+      if (isMobile && index === 3) return;
+
       const file = normalizePath(item.file);
       const title = item.title || baseName(file);
       const thumbSrc = `images/${file}`;
@@ -95,7 +103,9 @@
       lbImg.alt = a.dataset.title;
 
       lbImg.onload = () => {
-        requestAnimationFrame(() => (lbImg.style.opacity = "1"));
+        requestAnimationFrame(() => {
+          lbImg.style.opacity = "1";
+        });
       };
     }
 
@@ -141,25 +151,36 @@
 
     window.addEventListener("keydown", (e) => {
       if (!lb.classList.contains("open")) return;
+
       if (e.key === "Escape") closeLB();
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     });
 
-    // Swipe
-    lb.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].clientX;
-    }, { passive: true });
+    // Swipe mobile
+    lb.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartX = e.changedTouches[0].clientX;
+      },
+      { passive: true }
+    );
 
-    lb.addEventListener("touchend", (e) => {
-      if (touchStartX === null) return;
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      touchStartX = null;
+    lb.addEventListener(
+      "touchend",
+      (e) => {
+        if (touchStartX === null) return;
 
-      if (Math.abs(dx) < 40) return;
-      if (dx > 0) prev();
-      else next();
-    }, { passive: true });
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        touchStartX = null;
+
+        if (Math.abs(dx) < 40) return;
+
+        if (dx > 0) prev();
+        else next();
+      },
+      { passive: true }
+    );
   }
 
   async function init() {
@@ -170,6 +191,7 @@
       const data = await res.json();
 
       const photos = Array.isArray(data.photos) ? data.photos : [];
+
       if (!photos.length) {
         showMessage("Aucune image pour le moment.");
         return;
@@ -177,7 +199,6 @@
 
       const anchors = buildGallery(photos);
       setupLightbox(anchors);
-
     } catch (err) {
       console.error(err);
       showMessage("Erreur de chargement : vérifie images.json.");
