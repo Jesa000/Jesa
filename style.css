@@ -75,13 +75,6 @@ a {
   object-fit: contain;
 }
 
-.sublogo {
-  height: 18px;
-  width: auto;
-  display: block;
-  object-fit: contain;
-}
-
 .contact {
   display: flex;
   flex-direction: column;
