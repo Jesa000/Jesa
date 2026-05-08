@@ -208,7 +208,7 @@ a {
   }
 
   .brand {
-    padding: 0 8px;
+    padding: 0 10px;
   }
 
   .logo {
@@ -221,16 +221,16 @@ a {
   }
 
   .gallery {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     margin: 16px auto 40px;
-    padding: 0 6px;
-    column-gap: 3px;
-    row-gap: 14px;
+    padding: 0 10px;
+    column-gap: 6px;
+    row-gap: 16px;
   }
 
   .caption {
-    margin-top: 5px;
-    font-size: 8px;
+    margin-top: 6px;
+    font-size: 9px;
     opacity: 0.5;
   }
 
