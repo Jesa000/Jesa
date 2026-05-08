@@ -1,9 +1,9 @@
 {
   "photos": [
-    { "file": "photo1.jpg", "title": "pinned zipup hoodie sample" },
-    { "file": "photo2.jpg", "title": "pinned zipup hoodie sample" },
-    { "file": "photo3.jpg", "title": "pinned zipup hoodie sample" },
-    { "file": "photo4.jpg", "title": "pinned zipup hoodie sample" },
+    { "file": "photo1.jpg", "title": "pinned zipup sample.jpg" },
+    { "file": "photo2.jpg", "title": "pinned zipup sample.jpg" },
+    { "file": "photo3.jpg", "title": "pinned zipup sample.jpg" },
+    { "file": "photo4.jpg", "title": "pinned zipup sample.jpg" },
     { "file": "photo5.jpg", "title": "Titre photo 5" },
     { "file": "photo6.jpg", "title": "Titre photo 6" },
     { "file": "photo7.jpg", "title": "Titre photo 7" },
