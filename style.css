@@ -10,6 +10,7 @@ body {
   margin: 0;
   background: white;
   font-family: "Helvetica Neue", sans-serif;
+  font-weight: 200;
   color: #111;
 }
 
@@ -53,7 +54,7 @@ a {
 }
 
 .brand {
-  max-width: 1800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 60px;
   display: flex;
@@ -68,7 +69,7 @@ a {
 }
 
 .logo {
-  height: 25px;
+  height: 20px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -84,6 +85,7 @@ a {
 .email,
 .insta {
   font-size: 14px;
+  font-weight: 200;
   text-decoration: underline;
 }
 
@@ -123,6 +125,7 @@ a {
 .caption {
   margin-top: 12px;
   font-size: 15px;
+  font-weight: 200;
   text-align: center;
   opacity: 0.5;
 }
@@ -130,6 +133,7 @@ a {
 .gallery-message {
   grid-column: 1 / -1;
   font-size: 15px;
+  font-weight: 200;
   text-align: center;
   padding: 40px 0;
 }
