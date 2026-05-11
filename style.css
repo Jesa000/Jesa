@@ -26,7 +26,10 @@ a {
 /* INTRO */
 #intro {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: #fff;
   display: flex;
   align-items: center;
@@ -43,8 +46,13 @@ a {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 #intro.hide {
@@ -117,7 +125,8 @@ a {
 
 .category-img img {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -166,7 +175,7 @@ a {
   display: block;
   opacity: 0;
   transform: translateY(4px);
-  transition: opacity .35s ease, transform .35s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .gallery img.loaded {
@@ -193,8 +202,11 @@ a {
 /* LIGHTBOX */
 .lightbox {
   position: fixed;
-  inset: 0;
-  background: rgba(255,255,255,0.97);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.97);
   display: none;
   align-items: center;
   justify-content: center;
@@ -207,12 +219,12 @@ a {
 }
 
 .lightbox img {
-  width: min(720px, 92vw, calc(88vh * 0.8));
+  width: min(720px, 92vw, 70.4vh);
   aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
   opacity: 0;
-  transition: opacity .25s ease;
+  transition: opacity 0.25s ease;
 }
 
 .lightbox.open img {
@@ -304,7 +316,7 @@ a {
 
   .lb-prev,
   .lb-next {
-    display: none !important;
+    display: none;
   }
 
   .lb-close {
