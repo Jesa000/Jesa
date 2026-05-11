@@ -55,7 +55,7 @@ a {
 .brand {
   max-width: 1800px;
   margin: 0 auto;
-  padding: 0 70px;
+  padding: 0 80px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -91,11 +91,11 @@ a {
 .gallery {
   max-width: 1800px;
   margin: 30px auto 70px;
-  padding: 0 70px;
+  padding: 0 80px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 10px;
-  row-gap: 30px;
+  row-gap: 48px;
 }
 
 .work {
