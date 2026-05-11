@@ -2,7 +2,7 @@
 @font-face {
   font-family: "Helvetica Neue";
   src: url("fonts/HelveticaNeue.woff") format("woff");
-  font-weight: 400;
+  font-weight: 200;
   font-style: normal;
 }
 
@@ -49,13 +49,13 @@ a {
 
 /* HEADER */
 .top {
-  padding: 70px 0 50px;
+  padding: 60px 0 50px;
 }
 
 .brand {
   max-width: 1800px;
   margin: 0 auto;
-  padding: 0 80px;
+  padding: 0 60px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -91,7 +91,7 @@ a {
 .gallery {
   max-width: 1200px;
   margin: 30px auto 70px;
-  padding: 0 80px;
+  padding: 0 60px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 10px;
