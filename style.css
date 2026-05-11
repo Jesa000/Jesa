@@ -1,19 +1,30 @@
 /* GLOBAL */
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 @font-face {
-  font-family: "Helvetica Neue";
-  src: url("fonts/HelveticaNeue.woff") format("woff");
+  font-family: "HelveticaNeue";
+  src: url("./fonts/HelveticaNeue.woff") format("woff");
   font-weight: 200;
   font-style: normal;
+  font-display: swap;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  background: white;
-  font-family: "Helvetica Neue", sans-serif;
+  padding: 0;
+  background: #fff;
+  font-family: "HelveticaNeue", "Helvetica Neue", Arial, sans-serif;
   font-weight: 200;
   color: #111;
 }
@@ -23,13 +34,15 @@ a {
   text-decoration: none;
 }
 
+img {
+  max-width: 100%;
+  border: 0;
+}
+
 /* INTRO */
 #intro {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   background: #fff;
   display: flex;
   align-items: center;
@@ -41,6 +54,8 @@ a {
 
 #intro img {
   width: 120px;
+  height: auto;
+  display: block;
   opacity: 0;
   animation: fadeIn 0.9s ease forwards;
 }
@@ -62,6 +77,7 @@ a {
 
 /* HEADER */
 .top {
+  width: 100%;
   padding: 60px 0 40px;
 }
 
@@ -98,11 +114,12 @@ a {
 .email,
 .insta {
   font-size: 14px;
+  line-height: 1.2;
   font-weight: 200;
   text-decoration: underline;
 }
 
-/* CATEGORIES AU MILIEU */
+/* CATEGORIES */
 .categories {
   max-width: 1200px;
   margin: 0 auto 30px;
@@ -125,12 +142,12 @@ a {
 
 .category-img img {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
+  display: block;
   object-fit: contain;
-  object-position: center center;
+  object-position: center;
   transition: opacity 0.25s ease;
 }
 
@@ -162,12 +179,13 @@ a {
 }
 
 .work {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 }
 
-/* Format Instagram portrait */
 .gallery img {
   width: 100%;
   aspect-ratio: 4 / 5;
@@ -186,6 +204,7 @@ a {
 .caption {
   margin-top: 12px;
   font-size: 15px;
+  line-height: 1.2;
   font-weight: 200;
   text-align: center;
   opacity: 0.5;
@@ -194,6 +213,7 @@ a {
 .gallery-message {
   grid-column: 1 / -1;
   font-size: 15px;
+  line-height: 1.4;
   font-weight: 200;
   text-align: center;
   padding: 40px 0;
@@ -202,10 +222,7 @@ a {
 /* LIGHTBOX */
 .lightbox {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0;
   background: rgba(255, 255, 255, 0.97);
   display: none;
   align-items: center;
@@ -238,6 +255,8 @@ a {
   color: #555;
   cursor: pointer;
   opacity: 0.6;
+  font-family: inherit;
+  font-weight: 200;
 }
 
 .lb-btn:hover,
@@ -251,6 +270,7 @@ a {
   top: 50%;
   transform: translateY(-50%);
   font-size: 28px;
+  line-height: 1;
   padding: 12px 14px;
 }
 
@@ -267,10 +287,11 @@ a {
   top: 12px;
   right: 12px;
   font-size: 26px;
+  line-height: 1;
   padding: 10px 12px;
 }
 
-/* MOBILE UNIQUEMENT */
+/* MOBILE */
 @media (max-width: 600px) {
   .top {
     padding: 20px 0 20px;
@@ -323,5 +344,13 @@ a {
     top: 8px;
     right: 8px;
     font-size: 24px;
+  }
+
+  .lightbox {
+    padding: 14px;
+  }
+
+  .lightbox img {
+    width: min(92vw, 72vh);
   }
 }
