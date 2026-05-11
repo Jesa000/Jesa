@@ -3,7 +3,7 @@
   font-family: "Helvetica Neue";
   src: url("fonts/HelveticaNeue.woff") format("woff");
   font-weight: 400;
-  font-style: normal;
+  font-style: thin;
 }
 
 body {
@@ -93,7 +93,7 @@ a {
   margin: 30px auto 70px;
   padding: 0 40px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 28px;
   row-gap: 48px;
 }
@@ -104,6 +104,7 @@ a {
   align-items: center;
 }
 
+/* Format Instagram portrait */
 .gallery img {
   width: 100%;
   aspect-ratio: 4 / 5;
@@ -149,6 +150,7 @@ a {
   display: flex;
 }
 
+/* Même format quand tu cliques sur une image */
 .lightbox img {
   width: min(720px, 92vw, calc(88vh * 0.8));
   aspect-ratio: 4 / 5;
@@ -204,11 +206,11 @@ a {
 /* MOBILE UNIQUEMENT */
 @media (max-width: 600px) {
   .top {
-    padding: 18px 0 24px;
+    padding: 20px 0 28px;
   }
 
   .brand {
-    padding: 0 10px;
+    padding: 0 14px;
   }
 
   .logo {
@@ -222,8 +224,8 @@ a {
 
   .gallery {
     grid-template-columns: repeat(3, 1fr);
-    margin: 16px auto 40px;
-    padding: 0 10px;
+    margin: 20px auto 50px;
+    padding: 0 14px;
     column-gap: 6px;
     row-gap: 16px;
   }
