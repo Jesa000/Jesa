@@ -40,13 +40,7 @@
     gallery.innerHTML = "";
     const anchors = [];
 
-    const isMobile = window.matchMedia("(max-width: 600px)").matches;
-
-    items.forEach((item, index) => {
-      // Sur mobile uniquement, on cache la 4e photo.
-      // index === 3 correspond à photo4 dans ton images.json.
-      if (isMobile && index === 3) return;
-
+    items.forEach((item) => {
       const file = normalizePath(item.file);
       const title = item.title || baseName(file);
       const thumbSrc = `images/${file}`;
